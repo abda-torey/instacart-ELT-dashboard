@@ -1,0 +1,19 @@
+FROM apache/airflow:2.7.1-python3.11
+
+# Install Google Cloud dependencies
+RUN pip install --no-cache-dir \
+    apache-airflow[gcp]==2.7.1 \
+    apache-airflow-providers-google==10.2.0
+
+# Create the directory for JAR files
+RUN mkdir -p /opt/airflow/jars
+
+# Download the GCS and BigQuery connector JARs
+RUN curl -o /opt/airflow/jars/gcs-connector.jar https://storage.googleapis.com/hadoop-lib/gcs/gcs-connector-hadoop3-latest.jar && \
+    curl -o /opt/airflow/jars/bigquery-connector.jar https://repo1.maven.org/maven2/com/google/cloud/bigquery/bigquery-connector-hadoop3-latest.jar
+
+# Set the environment variables for Google Application Credentials
+ENV GOOGLE_APPLICATION_CREDENTIALS=/opt/airflow/keys/first-key.json
+
+# Set up entrypoint for webserver or scheduler based on docker-compose command
+ENTRYPOINT ["/entrypoint"]
