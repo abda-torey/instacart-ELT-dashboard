@@ -58,6 +58,10 @@ product_gcs_job:
 	docker  exec -it flink-jobmanager ./bin/flink run -py /opt/src/job/product_gcs_job.py --pyFiles /opt/src -d
 
 
+orders_gcs_job:
+	docker  exec -it flink-jobmanager ./bin/flink run -py /opt/src/job/orders_gcs_job.py --pyFiles /opt/src -d
+
+
 .PHONY: producer
 ## Run the Kafka producer
 producer:
