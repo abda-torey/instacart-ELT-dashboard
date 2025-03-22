@@ -1,0 +1,21 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+# Logs and Dag Processor logs
+logs/
+*.log
+
+# Keys (Sensitive data)
+keys/*.json
+
+# Airflow-related files
+airflow.env
+scheduler/
+dag_processor_manager/
+
+
+
+# Data files
+data/
+
