@@ -1,6 +1,0 @@
-version: 2
-
-sources:
-  - name: staging
-  - database: taxi-data-447320
-  - schema: instacart_ELT_dashboard
