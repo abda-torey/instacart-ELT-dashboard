@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: staging
+    database: taxi-data-447320
+    schema: instacart_ELT_dashboard
+
+    tables:
+      - name: aisles
+      - name: orders
+      - name: departments
+      - name: order_products_prior
+      - name: products
+      
