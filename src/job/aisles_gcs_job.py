@@ -1,5 +1,12 @@
 # from pyflink.datastream import StreamExecutionEnvironment
 from pyflink.table import EnvironmentSettings, TableEnvironment
+import os
+from dotenv import load_dotenv
+# Load environment variables from .env file
+load_dotenv()
+
+BUCKET_NAME = os.getenv("GCP_BUCKET_NAME")
+
 
 def create_aisle_sink_gcs(t_env):
     table_name = 'aisle_sink'
@@ -9,8 +16,9 @@ def create_aisle_sink_gcs(t_env):
             `aisle` STRING
         ) WITH (
             'connector' = 'filesystem',
-            'path' = 'gs://fake-ecommerce-taxi-data-447320/insta_cart/aisles/',  -- Output GCS path for aisles
+            'path' = 'gs://{BUCKET_NAME}/insta_cart/aisles/',  -- Output GCS path for aisles
             'format' = 'csv',
+            'csv.include-header' = 'true',  -- Include header row in CSV output
             'sink.parallelism' = '1'
         )
     """
@@ -30,6 +38,7 @@ def create_aisle_source_local(t_env):
             'connector' = 'filesystem',
             'path' = 'file:///opt/data/aisles.csv',  -- Local CSV file path for aisles
             'format' = 'csv',
+            'csv.include-header' = 'true',  -- Include header row in CSV output
             'csv.ignore-parse-errors' = 'true'
         );
     """

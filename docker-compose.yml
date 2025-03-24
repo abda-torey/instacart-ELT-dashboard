@@ -88,7 +88,9 @@ services:
       - GOOGLE_APPLICATION_CREDENTIALS=/opt/keys/first-key.json
       - |
         FLINK_PROPERTIES=
-        jobmanager.rpc.address: jobmanager        
+        jobmanager.rpc.address: jobmanager      
+    env_file:
+      - .env  
   
   # Flink task manager
   taskmanager:
@@ -117,7 +119,8 @@ services:
         taskmanager.numberOfTaskSlots: 15
         parallelism.default: 3
       - GOOGLE_APPLICATION_CREDENTIALS=/opt/keys/first-key.json
-  
+    env_file:
+      - .env
   # uploader:
   #   image: google/cloud-sdk:latest
   #   depends_on:
