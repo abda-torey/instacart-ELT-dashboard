@@ -1,5 +1,7 @@
 -- models/fact_order_details.sql
-
+{{ config(
+    enabled = false
+) }}
 with order_prior as (
     select
         op.order_id,
