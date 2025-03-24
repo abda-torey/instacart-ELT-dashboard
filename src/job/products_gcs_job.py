@@ -1,5 +1,10 @@
 # from pyflink.datastream import StreamExecutionEnvironment
 from pyflink.table import EnvironmentSettings, TableEnvironment
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+BUCKET_NAME = os.getenv("GCP_BUCKET_NAME")
 
 def create_products_sink_gcs(t_env):
     table_name = 'products_sink'
@@ -11,7 +16,7 @@ def create_products_sink_gcs(t_env):
             `department_id` INT
         ) WITH (
             'connector' = 'filesystem',
-            'path' = 'gs://fake-ecommerce-taxi-data-447320/insta_cart/products/',  -- Output GCS path
+            'path' = 'gs://{BUCKET_NAME}/insta_cart/products/',  -- Output GCS path
             'format' = 'csv',
             'sink.parallelism' = '1'
         )
