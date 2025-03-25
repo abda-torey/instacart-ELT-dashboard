@@ -14,7 +14,7 @@ with orders_data as (
         order_dow,
         order_hour_of_day,
         days_since_prior_order
-    from {{ source('staging', 'orders') }}
+    from {{ ref('stg_staging__orders') }}
 ),
 
 order_products_prior_data as (
@@ -43,6 +43,6 @@ enriched_orders as (
     left join order_products_prior_data op on o.order_id = op.order_id
 )
 
-select * from enriched_orders;
+select * from enriched_orders
 
 -- dbt build --select fact_orders
