@@ -4,7 +4,7 @@
 
 with source as (
     select *
-    from {{ source('staging', 'departments') }}
+    from {{ ref('stg_staging__departments') }}
 ),
 
 cleaned_departments as (
@@ -14,4 +14,4 @@ cleaned_departments as (
     from source
 )
 
-select * from cleaned_departments;
+select * from cleaned_departments
