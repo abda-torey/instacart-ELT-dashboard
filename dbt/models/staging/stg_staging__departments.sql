@@ -14,13 +14,13 @@ cleaned_departments as (
     -- Perform any necessary data transformations or cleaning here
     select
         -- identifiers
-        department_id,
-        department
+        int64_field_0 as department_id,
+        string_field_1 as department
     from source
 )
 
 -- Return the cleaned data
-select * from cleaned_departments;
+select * from cleaned_departments
 -- dbt build --select <model_name> --vars '{'is_test_run': 'false'}'
 {% if var('is_test_run', default=true) %}
 
