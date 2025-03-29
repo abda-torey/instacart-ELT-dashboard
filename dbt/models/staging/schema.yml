@@ -4,11 +4,185 @@ sources:
   - name: staging
     database: taxi-data-447320
     schema: instacart_ELT_dashboard
-
+    description: "Source data for the Instacart ELT Dashboard, containing staging tables for aisles, orders, departments, and products."
     tables:
       - name: aisles
+        description: "Contains information about store aisles, including aisle names and identifiers."
+
       - name: orders
+        description: "Order data including order identifiers, user IDs, and order-specific details such as day of the week and hour of the day."
+
       - name: departments
+        description: "Contains department data, mapping department names to unique identifiers."
+
       - name: order_products_prior
+        description: "This table includes details of products ordered in prior purchases, with links to orders and products."
+
       - name: products
-      
+        description: "Contains product information, including product identifiers, names, and links to aisle and department data."
+
+models:
+  - name: stg_staging__products
+    description: "Staging table containing product details, including product ID, name, and references to aisle and department data."
+    columns:
+      - name: product_id
+        data_type: int64
+        description: "Unique identifier for each product."
+        tests:
+          - unique:
+              severity: warn
+          - not_null:
+              severity: warn
+
+      - name: product_name
+        data_type: string
+        description: "The name of the product."
+        tests:
+          - not_null:
+              severity: warn
+
+      - name: aisle_id
+        data_type: int64
+        description: "Unique identifier for the aisle where the product is located."
+        tests:
+          - not_null:
+              severity: warn
+          - relationships:
+              to: ref('stg_staging__aisles')
+              field: aisle_id
+              severity: warn
+
+      - name: department_id
+        data_type: int64
+        description: "Unique identifier for the department where the product belongs."
+        tests:
+          - not_null:
+              severity: warn
+          - relationships:
+              to: ref('stg_staging__departments')
+              field: department_id
+              severity: warn
+
+  - name: stg_staging__aisles
+    description: "Staging table containing aisle information, with unique identifiers and aisle names."
+    columns:
+      - name: aisle_id
+        data_type: int64
+        description: "Unique identifier for each aisle."
+        tests:
+          - unique:
+              severity: warn
+          - not_null:
+              severity: warn
+
+      - name: aisle
+        data_type: string
+        description: "Name of the aisle."
+        tests:
+          - not_null:
+              severity: warn
+
+  - name: stg_staging__order_products_prior
+    description: "Staging table containing product details for prior orders, linking orders and products with additional ordering information."
+    columns:
+      - name: order_id
+        data_type: int64
+        description: "Unique identifier for each order."
+        tests:
+          - not_null:
+              severity: warn
+          - relationships:
+              to: ref('stg_staging__orders')
+              field: order_id
+              severity: warn
+
+      - name: product_id
+        data_type: int64
+        description: "Unique identifier for each product in the order."
+        tests:
+          - not_null:
+              severity: warn
+          - relationships:
+              to: ref('stg_staging__products')
+              field: product_id
+              severity: warn
+
+      - name: add_to_cart_order
+        data_type: int64
+        description: "Sequence in which the product was added to the cart."
+        tests:
+          - not_null:
+              severity: warn
+
+      - name: reordered
+        data_type: int64
+        description: "Indicates whether the product has been reordered (1 = yes, 0 = no)."
+        tests:
+          - not_null:
+              severity: warn
+
+  - name: stg_staging__departments
+    description: "Staging table containing department data, including department IDs and names."
+    columns:
+      - name: department_id
+        data_type: int64
+        description: "Unique identifier for each department."
+        tests:
+          - unique:
+              severity: warn
+          - not_null:
+              severity: warn
+
+      - name: department
+        data_type: string
+        description: "Name of the department."
+        tests:
+          - not_null:
+              severity: warn
+
+  - name: stg_staging__orders
+    description: "Staging table containing order details, including order identifiers, user information, and order-specific time data."
+    columns:
+      - name: order_key
+        data_type: string
+        description: "Unique key for each order."
+        tests:
+          - not_null:
+              severity: warn
+
+      - name: order_id
+        data_type: int64
+        description: "Unique identifier for each order."
+        tests:
+          - unique:
+              severity: warn
+          - not_null:
+              severity: warn
+
+      - name: user_id
+        data_type: int64
+        description: "Unique identifier for the user placing the order."
+        tests:
+          - not_null:
+              severity: warn
+
+      - name: order_dow
+        data_type: int64
+        description: "Day of the week when the order was placed (0 = Sunday, 6 = Saturday)."
+        tests:
+          - not_null:
+              severity: warn
+
+      - name: order_hour_of_day
+        data_type: int64
+        description: "Hour of the day when the order was placed (0-23)."
+        tests:
+          - not_null:
+              severity: warn
+
+      - name: days_since_prior_order
+        data_type: numeric
+        description: "Number of days since the user's prior order."
+        tests:
+          - not_null:
+              severity: warn

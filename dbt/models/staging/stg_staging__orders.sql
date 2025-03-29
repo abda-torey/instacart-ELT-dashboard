@@ -18,6 +18,7 @@ select
 
     -- order details
     {{ dbt.safe_cast("order_dow", api.Column.translate_type("integer")) }} as order_dow,
+    {{get_day_description("order_dow")}} as day,
     {{ dbt.safe_cast("order_hour_of_day", api.Column.translate_type("integer")) }} as order_hour_of_day,
     cast(days_since_prior_order as numeric) as days_since_prior_order
 

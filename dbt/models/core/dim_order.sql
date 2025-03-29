@@ -13,6 +13,7 @@ dim_orders as (
     order_id,
     user_id,
     order_dow,
+    day,
     order_hour_of_day,
     days_since_prior_order
     from source
