@@ -18,6 +18,7 @@ orders as (
         o.order_id,
         o.user_id,
         o.order_dow,
+        o.day,
         o.order_hour_of_day,
         o.days_since_prior_order
     from {{ ref('stg_staging__orders') }} o
@@ -45,6 +46,7 @@ select
     op.add_to_cart_order,
     op.reordered,
     o.order_dow,
+    o.day,
     o.order_hour_of_day,
     o.days_since_prior_order,
     pd.aisle,
