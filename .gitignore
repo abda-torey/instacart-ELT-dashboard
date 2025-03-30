@@ -14,10 +14,11 @@ airflow.env
 scheduler/
 dag_processor_manager/
 
-
-
+# ignore terrfaorm files
+# Ignore all files in the .terraform directory
+terraform/.terraform/
 # gcp credentials for terraform
-
+terraform/keys*.json
 # Data files
 data/
 
