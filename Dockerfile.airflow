@@ -3,7 +3,8 @@ FROM apache/airflow:2.7.1-python3.11
 # Install Google Cloud dependencies
 RUN pip install --no-cache-dir \
     apache-airflow[gcp]==2.7.1 \
-    apache-airflow-providers-google==10.2.0
+    apache-airflow-providers-google==10.2.0 \
+    requests
 
 # Create the directory for JAR files
 RUN mkdir -p /opt/airflow/jars

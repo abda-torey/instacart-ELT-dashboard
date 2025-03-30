@@ -16,6 +16,8 @@ dag_processor_manager/
 
 
 
+# gcp credentials for terraform
+
 # Data files
 data/
 
