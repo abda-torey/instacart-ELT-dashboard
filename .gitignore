@@ -18,7 +18,7 @@ dag_processor_manager/
 # Ignore all files in the .terraform directory
 terraform/.terraform/
 # gcp credentials for terraform
-terraform/keys*.json
+terraform/keys/*.json
 # Data files
 data/
 
