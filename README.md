@@ -10,6 +10,8 @@ This project builds a real-time e-commerce data analytics pipeline using Instaca
 
 The end goal is to create a scalable system that efficiently handles large datasets while providing real-time insights into consumer behavior, product performance, and order management.
 
+![ELT Diagram](Images/elt.png)
+
 ## Problem Statement
 
 **Challenge:**  
@@ -124,7 +126,10 @@ To set up and run this project, ensure you have the following prerequisites:
    ```bash
    docker-compose up --build
    ```
-
+   Or use the commands in the makefile to make development easier for you.
+   ```bash
+   make up
+   ```
 3. **Initialize Terraform**:
    Set up GCS buckets and BigQuery datasets by running the Terraform scripts.
    ```bash
@@ -133,9 +138,7 @@ To set up and run this project, ensure you have the following prerequisites:
    ```
 
 4. **Install Python dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
+   each docker container will reference the requirements.txt if it is necessary for it
 
 5. **Configure Airflow and run DAGs**:
    Access the Airflow UI to trigger the DAGs for data ingestion and transformation.
@@ -164,11 +167,4 @@ To set up and run this project, ensure you have the following prerequisites:
 - **Looker Studio**:  
   The dashboard displays various analyses such as top products, department-wise product filtering, and order trends.
   - Time series analysis shows how orders differ based on the day of the week.
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
----
-
-This should now render cleanly on GitHub. Let me know if you need any further adjustments!
+![ELT Diagram](Images/dashboard.png)
